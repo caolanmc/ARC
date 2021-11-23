@@ -1,3 +1,18 @@
+# PTfAIassignment3
+
+Repo for CT5148 assignment 3, "ARC", abstraction and reasoning Corpus.
+
+Forked repo (Appended to this README) found at: https://github.com/jmmcd/ARC
+
+Further info found in Chollet, The Measure of Intelligence: https://arxiv.org/abs/1911.01547
+
+
+
+
+
+
+
+
 # The Abstraction and Reasoning Corpus (ARC)
 
 This repository contains the ARC task data, as well as a browser-based interface for humans to try their hand at solving the tasks manually.
