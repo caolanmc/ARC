@@ -20,6 +20,7 @@ Summary:
 
 '''
 
+import enum
 import os, sys
 import json
 import numpy as np
@@ -28,12 +29,14 @@ import re
 from collections import Counter
 import sklearn as sk
 import matplotlib.pyplot as plt
+from math import dist
 
 ### YOUR CODE HERE: write at least three functions which solve
 ### specific tasks by transforming the input x and returning the
 ### result. Name them according to the task ID as in the three
 ### examples below. Delete the three examples. The tasks you choose
 ### must be in the data/training directory, not data/evaluation.
+'''
 def solve_23b5c85d(x):
     #easy
     xFlat = x.flatten()
@@ -55,13 +58,46 @@ def solve_23b5c85d(x):
     x = temp
     
     return x
-
+'''
 #def solve_4290ef0e(x):
-    #easy
-    return x
+    #difficult?
+    #return x
 
-#def solve_caa06a1f(x):
+def solve_caa06a1f(x):
     #easy
+    xFlat = x.flatten()
+    count = Counter(xFlat)
+    countList = list(Counter(count).items())
+
+
+    pattern = []
+
+    for index, i in enumerate(x):
+        if pattern:
+            for j in i:
+                if(j in pattern):
+                    pass
+                else:
+                    pattern.append(j)
+                    
+        else:
+            #index 0
+            pattern.append(i[0])
+    pattern.pop()
+    
+    print(pattern)
+    print(x.shape)
+
+    temp = np.array([])
+
+
+    for i in x:
+        if temp.any(): #Checks if out temp ndarray is empty, if it isn't, adds our next row of digits.
+            temp = np.vstack((temp,i))
+        else: #Temp found empty, so we add our first line, this allows us to get the correct size for the above vstack()
+            temp = np.fromiter(i, dtype=int)
+    x = temp
+    print(x)
     return x
 
 #def solve_2dd709a(x):
@@ -119,26 +155,26 @@ def read_ARC_JSON(filepath):
 def test(taskID, solve, data):
     """Given a task ID, call the given solve() function on every
     example in the task data."""
-    print(taskID)
+    #print(taskID)
     train_input, train_output, test_input, test_output = data
-    print("Training grids")
+    #print("Training grids")
     for x, y in zip(train_input, train_output):
         yhat = solve(x)
         show_result(x, y, yhat)
-    print("Test grids")
+    #print("Test grids")
     for x, y in zip(test_input, test_output):
         yhat = solve(x)
         show_result(x, y, yhat)
 
         
 def show_result(x, y, yhat):
-    print("Input")
-    print(x)
-    print("Correct output")
-    print(y)
-    print("Our output")
-    print(yhat)
-    print("Correct?")
+    #print("Input")
+    #print(x)
+    #print("Correct output")
+    #print(y)
+    #print("Our output")
+    #print(yhat)
+    #print("Correct?")
     if y.shape != yhat.shape:
         print(f"False. Incorrect shape: {y.shape} v {yhat.shape}")
     else:
