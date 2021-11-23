@@ -1,9 +1,33 @@
 #!/usr/bin/python
 
+'''
+Name: Caolan McDonagh
+Student ID: 21249929
+Github: https://github.com/caolanmc/ARC
+
+Task 23b5c85d:
+
+Task 4290ef0e:
+
+Task caa06a1f:
+
+Task 2dd709a:
+
+Task 62c24649:
+
+Summary:
+
+
+'''
+
 import os, sys
 import json
 import numpy as np
 import re
+
+from collections import Counter
+import sklearn as sk
+import matplotlib.pyplot as plt
 
 ### YOUR CODE HERE: write at least three functions which solve
 ### specific tasks by transforming the input x and returning the
@@ -11,22 +35,37 @@ import re
 ### examples below. Delete the three examples. The tasks you choose
 ### must be in the data/training directory, not data/evaluation.
 def solve_23b5c85d(x):
+    xFlat = x.flatten()
+    count = Counter(xFlat)
+
+    #leastCommon = min(count.values())
+    digit = [key for key, value in count.items() if value == min(count.values())] #get the value of our least frequent number.
+    digit = digit[0] #Extract our int
+
+    for i in x:
+        i = i[i == digit]
+        print(i)
+    
+
+    print('=========================')
+    print(digit)
+    print('=========================')
     #easy
     return x
 
-def solve_4290ef0e(x):
+#def solve_4290ef0e(x):
     #easy
     return x
 
-def solve_caa06a1f(x):
+#def solve_caa06a1f(x):
     #easy
     return x
 
-def solve_2dd709a(x):
+#def solve_2dd709a(x):
     #Medium?
     return x
 
-def solve_62c24649(x):
+#def solve_62c24649(x):
     #Easy/Medium?
     return x
 
@@ -77,26 +116,26 @@ def read_ARC_JSON(filepath):
 def test(taskID, solve, data):
     """Given a task ID, call the given solve() function on every
     example in the task data."""
-    print(taskID)
+    #print(taskID)
     train_input, train_output, test_input, test_output = data
-    print("Training grids")
+    #print("Training grids")
     for x, y in zip(train_input, train_output):
         yhat = solve(x)
         show_result(x, y, yhat)
-    print("Test grids")
+    #print("Test grids")
     for x, y in zip(test_input, test_output):
         yhat = solve(x)
         show_result(x, y, yhat)
 
         
 def show_result(x, y, yhat):
-    print("Input")
-    print(x)
-    print("Correct output")
-    print(y)
-    print("Our output")
-    print(yhat)
-    print("Correct?")
+    #print("Input")
+    #print(x)
+    #print("Correct output")
+    #print(y)
+    #print("Our output")
+    #print(yhat)
+    #print("Correct?")
     if y.shape != yhat.shape:
         print(f"False. Incorrect shape: {y.shape} v {yhat.shape}")
     else:
