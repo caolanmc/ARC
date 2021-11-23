@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt
 ### examples below. Delete the three examples. The tasks you choose
 ### must be in the data/training directory, not data/evaluation.
 def solve_23b5c85d(x):
+    #easy
     xFlat = x.flatten()
     count = Counter(xFlat)
 
@@ -42,15 +43,17 @@ def solve_23b5c85d(x):
     digit = [key for key, value in count.items() if value == min(count.values())] #get the value of our least frequent number.
     digit = digit[0] #Extract our int
 
-    for i in x:
-        i = i[i == digit]
-        print(i)
-    
+    temp = np.array([])
 
-    print('=========================')
-    print(digit)
-    print('=========================')
-    #easy
+    for i in x:
+        i = i[i == digit] #Remove anything that isn't our lowest digit.
+        if i.any(): #Removes any empty rows
+            if temp.any(): #Checks if out temp ndarray is empty, if it isn't, adds our next row of digits.
+                temp = np.vstack((temp,i))
+            else: #Temp found empty, so we add our first line, this allows us to get the correct size for the above vstack()
+                temp = np.fromiter(i, dtype=int)
+    x = temp
+    
     return x
 
 #def solve_4290ef0e(x):
@@ -116,26 +119,26 @@ def read_ARC_JSON(filepath):
 def test(taskID, solve, data):
     """Given a task ID, call the given solve() function on every
     example in the task data."""
-    #print(taskID)
+    print(taskID)
     train_input, train_output, test_input, test_output = data
-    #print("Training grids")
+    print("Training grids")
     for x, y in zip(train_input, train_output):
         yhat = solve(x)
         show_result(x, y, yhat)
-    #print("Test grids")
+    print("Test grids")
     for x, y in zip(test_input, test_output):
         yhat = solve(x)
         show_result(x, y, yhat)
 
         
 def show_result(x, y, yhat):
-    #print("Input")
-    #print(x)
-    #print("Correct output")
-    #print(y)
-    #print("Our output")
-    #print(yhat)
-    #print("Correct?")
+    print("Input")
+    print(x)
+    print("Correct output")
+    print(y)
+    print("Our output")
+    print(yhat)
+    print("Correct?")
     if y.shape != yhat.shape:
         print(f"False. Incorrect shape: {y.shape} v {yhat.shape}")
     else:
