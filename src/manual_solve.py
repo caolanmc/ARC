@@ -5,29 +5,59 @@ Name: Caolan McDonagh
 Student ID: 21249929
 Github: https://github.com/caolanmc/ARC
 
-Task 23b5c85d:
+Task 23b5c85d (All grids successful):
     Simple enough task, x number of coloured quadrilaterals generated, the idea is to return just the smallest.
     I flatten the x ndArray, to get a count of each colour (number), I now have the smallest int, I then go through the original x ndArray, removing anything that isn't our smallest int, and vStack() the remainder into a new temp array, this is then let = to x.
-    Task 4290ef0e:
 
-Task caa06a1f:
+Task caa06a1f (All grids successful):
     Had a lot of trouble with this, ended up going about it wrong twice, undoing all my work. Currently in its not
     fully working state it is able to find the original pattern, and replace the non patterened colours/numbers
     with the pattern, in the correct array size. Now I need to transform this pattern. Demonstrations show
     the patter swaps, but was having difficulty with this and moved on temporarily.
     Task 2dd709a:
 
-Task 62c24649:
-    :(
-
-Task 62c24649:
+Task 62c24649 (All grids successful):
     Went about rotating all the ndArrays +90/-90/+180 degrees, took a second look at the ARC html only to note none of these are transformed count/clockwise, they're actually mirrored. So all of  that work was put in the bin, thankfully I read up on np.flip and
     and was able to implement this mirroring pretty stress free. Our original X is basically the top left quarted of our image, we flip this horizontally to get the top left, flip these two vertically to get our bottom half, now we have the total reqested output.
 
-Task 08ed6ac7:
+Task 6d0aefbc (All grids successful):
+    Same as above task (6d0aefbc), just only one flip horizontally, none vertically. I also saw another task
+    with the same concept, except it was one flip vertically, not horizontally.
+
+Task a61f2674 (All grids successful):
+    This was fun, I went about it in a gnarly way with multiple loops etc, went scrounging thorugh numpy documentation and 
+    found practically everything I needed by going down a rabbit hole. The idea of the task is the find the largest and 
+    smallest columns, give them a new value/colour and remove everthing else.
+
+Task 4347f46a (All grids successful):
+    I was looking into using SK learn or something other than a gross mess of loops and if statements.
+    I came across Scikit image segmentation, which has edge detection modules. This task was to carve
+    out the inside of given quadrilateral, sk image "Find_Boundaries" can find these quads, then use
+    the "inner" mode to empty anything that != edge. Great, and I feel it could be applicable across 
+    many tasks.
 
 Summary:
-    Transcriber/describer -> construction 
+    In summary of this assignment, I think this is probably some of the best testing my programming has come under, in terms of trying to think out problems. What is so easy to compute in my own head can be an absolute
+    nightmare when transcribing to instructions to an interpreter. Its a great way of showing how tasks considered simple by humans are much more complex under the hood when it comes to letting a computer or some sort of 
+    AI algorithm work them out.
+        Working through my different solve* tasks, there was a lot of tasks, which all under the guise of the abstract and reasoning corpus, they were vastly different in how you would go about solving them via
+    programming. There was also a few that would fall under teh same school of thought, where it is about max or min counts of a given colour, distance orientated tasks, simple image mirroring or rotation. These 
+    tasks could all be solved by simiar solve* methods, with a bit of tweaking and allowance for some variance. This got me thinking a great way to make a more overarching soltuion/master solve* metod would be 
+    to break up the work. You could have some sort of transcriber/describer, which has learnt from previous tasks to be able to classify a given task, e.g image mirroring, colour counting, pattern solving,
+    distance related tasks etc... This transcriber could then issue the task to the correlating constructor that would carry out the given task. Outputs then tested, we can see if that was a good decision
+    and bank the data. The commonalities between tasks are in a more catergorical level/broader perspective, rather than task to task basis. I learned this through checking dozens of tasks via the random button, they're
+    all different, but a good few share the same core concept, testing different parts of the human brain.
+        While working on this, I found numpy was my greatest companion. It does a lot of the heavy lifting when it comes to ndarray manipulation and saved me a lot of stress and time while working through the problems.
+    Scikit image saved the day towards the end, but I found it too late in my ventures into this assignment, I feel it is much more powerful than I realize and could have been utilized in a lot of these problems. I went 
+    into them looking at them as matrix related problems, but SK Image showed me I can look at some of them as images, treat the ndArrays as an image as I would have looking at the image in grid form on the html. I would
+    also bet there is better use in other packages, but again, I looked too late.
+        Chollet speaks on how "Generalization is not quantified" with regards to no quantitative of the generalization of the evanuation set given the test set difficulty. Some of these tasks I would say are easy and could
+    solve in seconds, where someone else might struggle for a while. I could jump to the next task and have the opposite reaction, which I did infact encounter some tasks I couldn't wrap my head around. This difficulty does
+    need to be quantified through human performance, which Chollet does intend on doing, going off his paper. This also factors into the task solving. I could find a task very hard to programme, as I found the task hard
+    to solve with my brain, where another programmer might find it easy to solve both in brain, and so is able to implement it more efficiently. There is tricks that can be missed by the human brain in both real life interpretation
+    and a programming interpretation so this can cause hiccups when trying to recreate human intelligence, as intelligence has no definite measure. It is quite the task Challet is after.
+
+
 
 '''
 
@@ -38,11 +68,6 @@ import numpy as np
 import re
 
 from collections import Counter
-from numpy.core.fromnumeric import shape
-import sklearn as sk
-import matplotlib.pyplot as plt
-from math import dist
-import skimage
 from skimage.segmentation import find_boundaries
 
 ### YOUR CODE HERE: write at least three functions which solve
@@ -50,7 +75,7 @@ from skimage.segmentation import find_boundaries
 ### result. Name them according to the task ID as in the three
 ### examples below. Delete the three examples. The tasks you choose
 ### must be in the data/training directory, not data/evaluation.
-'''
+
 def solve_23b5c85d(x):
     #easy
     xFlat = x.flatten()
@@ -72,8 +97,7 @@ def solve_23b5c85d(x):
     x = temp
     
     return x
-'''
-'''
+
 def solve_caa06a1f(x):
     #medium
     pattern = []
@@ -105,13 +129,7 @@ def solve_caa06a1f(x):
     x = newGrid
 
     return x
-'''
-'''
-def solve_2dd70a9a(x):
-    #Medium?
-    return x
-'''
-'''
+
 def solve_62c24649(x):
     #Easy
 
@@ -130,8 +148,7 @@ def solve_62c24649(x):
     x = np.append(top,bottom,axis=0)    
 
     return x
-'''
-'''
+
 def solve_6d0aefbc(x):
     # Easier version of task 62c24649 seen above, only doing it for the sake of it.
     topLeft = x
@@ -143,8 +160,6 @@ def solve_6d0aefbc(x):
 
     return x
 
-    '''
-'''
 def solve_a61f2674(x):
     #Medium?
 
@@ -177,7 +192,7 @@ def solve_a61f2674(x):
     x = np.where(x == value, 0, x)
     
     return x
-'''
+
 def solve_4347f46a(x):
     #difficult (without prior knowledge of sk image)?
     #I was looking at tackling like this with a more hands on approach as I have done all along, but I looked into
@@ -185,8 +200,9 @@ def solve_4347f46a(x):
     #Studied their modu;es and there is acutally lots of useful stuff here that I wish I knew earlier: https://scikit-image.org/docs/stable/api/skimage.segmentation.html
     
     #returns the same ndArray, with true/false in place of where alternate "pixels" or digits
-    #This can simply be multiplied by the original x to result in numerical output, rather than bool.
     findboundaries = find_boundaries(x, mode = 'inner')
+
+    #This can simply be multiplied by the original x to result in numerical output, rather than bool.
     x = findboundaries * x
 
     return x
