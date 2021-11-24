@@ -24,6 +24,8 @@ Task 62c24649:
     Went about rotating all the ndArrays +90/-90/+180 degrees, took a second look at the ARC html only to note none of these are transformed count/clockwise, they're actually mirrored. So all of  that work was put in the bin, thankfully I read up on np.flip and
     and was able to implement this mirroring pretty stress free. Our original X is basically the top left quarted of our image, we flip this horizontally to get the top left, flip these two vertically to get our bottom half, now we have the total reqested output.
 
+Task 08ed6ac7:
+
 Summary:
     Transcriber/describer -> construction 
 
@@ -105,7 +107,6 @@ def solve_caa06a1f(x):
 
     return x
 '''
-
 '''
 def solve_2dd70a9a(x):
     #Medium?
@@ -131,6 +132,23 @@ def solve_62c24649(x):
 
     return x
 '''
+'''
+def solve_6d0aefbc(x):
+    # Easier version of task 62c24649 seen above, only doing it for the sake of it.
+    topLeft = x
+    topRight = np.fliplr(x)
+    top = np.array([])
+
+    top = np.append(topLeft,topRight,axis=1)
+    x = top
+
+    return x
+
+    '''
+    
+#def solve_08ed6ac7(x):
+    #Medium?
+    #return x
 
 def main():
     # Find all the functions defined in this file whose names are
