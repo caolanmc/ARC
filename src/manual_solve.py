@@ -83,21 +83,21 @@ def solve_caa06a1f(x):
         else:
             #index 0
             pattern.append(i[0])
-    pattern.pop()
-    
-    print(pattern)
-    print(x.shape)
+
+    digit = pattern.pop()
 
     temp = np.array([])
 
+    shape = ((int(x.shape[0]), (int(x.shape[1]))))
+    newGrid = np.tile(pattern,(shape))
 
-    for i in x:
-        if temp.any(): #Checks if out temp ndarray is empty, if it isn't, adds our next row of digits.
-            temp = np.vstack((temp,i))
-        else: #Temp found empty, so we add our first line, this allows us to get the correct size for the above vstack()
-            temp = np.fromiter(i, dtype=int)
-    x = temp
-    print(x)
+    trim = shape[1]-newGrid.shape[1]
+    
+    newGrid = newGrid[:,:trim]
+    
+
+    x = newGrid
+
     return x
 
 #def solve_2dd709a(x):
@@ -157,24 +157,24 @@ def test(taskID, solve, data):
     example in the task data."""
     #print(taskID)
     train_input, train_output, test_input, test_output = data
-    #print("Training grids")
+    print("Training grids")
     for x, y in zip(train_input, train_output):
         yhat = solve(x)
         show_result(x, y, yhat)
-    #print("Test grids")
+    print("Test grids")
     for x, y in zip(test_input, test_output):
         yhat = solve(x)
         show_result(x, y, yhat)
 
         
 def show_result(x, y, yhat):
-    #print("Input")
-    #print(x)
-    #print("Correct output")
-    #print(y)
-    #print("Our output")
-    #print(yhat)
-    #print("Correct?")
+    print("Input")
+    print(x)
+    print("Correct output")
+    print(y)
+    print("Our output")
+    print(yhat)
+    print("Correct?")
     if y.shape != yhat.shape:
         print(f"False. Incorrect shape: {y.shape} v {yhat.shape}")
     else:
