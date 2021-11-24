@@ -1,6 +1,14 @@
-# PTfAIassignment3
+# CT5148 Assignment 3
 
 Repo for CT5148 assignment 3, "ARC", abstraction and reasoning Corpus. I will be choosing a handful of example ARC functions, writing a function to solve each of these.
+
+List of tasks (.JSON):
+23b5c85d,
+caa06a1f,
+62c24649,
+6d0aefbc,
+a61f2674,
+4347f46a
 
 Forked repo (Appended to this README) found at: https://github.com/jmmcd/ARC
 
