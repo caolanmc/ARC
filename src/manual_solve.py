@@ -145,10 +145,39 @@ def solve_6d0aefbc(x):
     return x
 
     '''
-    
-#def solve_08ed6ac7(x):
+
+def solve_a61f2674(x):
     #Medium?
-    #return x
+
+    #Below could just be replaced with value = 5 (Grey), but I didn't realise that till after, this will work if columns != grey or 5
+    value = np.unique(x)
+    value = int(np.delete(value,np.where(value==0)))
+
+    
+    columnCheck = np.count_nonzero(x==value, axis=0) #Here we get the count of non zeros per columnd
+    sortedColumns = np.sort(columnCheck) #Sort the columns for grabbing largest/smallest count later
+    indices = np.argsort(columnCheck) #Returns the unsorted indices so we can correctly reference the largest/smallest in relation to the original
+
+    smallestIndex = sortedColumns.tolist().index(next(filter(lambda x: x!=0, sortedColumns))) #returns index where smallest non 0 column is AKA first non 0 in sorted list
+    smallestIndex = indices[smallestIndex] 
+    largestIndex = indices[-1] #returns index where largest column is AKA last element in the sorted list
+
+    #These are the numerical value/colour of the smallest and largest digits respectivly, not useful in this instance though.
+    #smallestval = columnCheck[smallestIndex]
+    #largestval = columnCheck[largestIndex]
+
+    #These two lines will replace our largest and smallest columns, where values !=0 with the new respective number/colour.
+    newSmall = np.where(x[:,smallestIndex]!=0,2,0)
+    newLarge = np.where(x[:,largestIndex]!=0,1,0)
+
+    #Replace the altered columns in the original x ndArray
+    x[:,smallestIndex] = newSmall
+    x[:,largestIndex] = newLarge
+
+    #Replace all values equal to 'value' (grey) with 0.
+    x = np.where(x == value, 0, x)
+    
+    return x
 
 def main():
     # Find all the functions defined in this file whose names are
