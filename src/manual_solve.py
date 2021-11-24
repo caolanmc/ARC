@@ -42,6 +42,8 @@ from numpy.core.fromnumeric import shape
 import sklearn as sk
 import matplotlib.pyplot as plt
 from math import dist
+import skimage
+from skimage.segmentation import find_boundaries
 
 ### YOUR CODE HERE: write at least three functions which solve
 ### specific tasks by transforming the input x and returning the
@@ -71,9 +73,6 @@ def solve_23b5c85d(x):
     
     return x
 '''
-#def solve_4290ef0e(x):
-    #difficult?
-    #return x
 '''
 def solve_caa06a1f(x):
     #medium
@@ -145,7 +144,7 @@ def solve_6d0aefbc(x):
     return x
 
     '''
-
+'''
 def solve_a61f2674(x):
     #Medium?
 
@@ -177,6 +176,19 @@ def solve_a61f2674(x):
     #Replace all values equal to 'value' (grey) with 0.
     x = np.where(x == value, 0, x)
     
+    return x
+'''
+def solve_4347f46a(x):
+    #difficult (without prior knowledge of sk image)?
+    #I was looking at tackling like this with a more hands on approach as I have done all along, but I looked into
+    #libraries like sk.learn to see if there was any tools that could help, I found sk image.
+    #Studied their modu;es and there is acutally lots of useful stuff here that I wish I knew earlier: https://scikit-image.org/docs/stable/api/skimage.segmentation.html
+    
+    #returns the same ndArray, with true/false in place of where alternate "pixels" or digits
+    #This can simply be multiplied by the original x to result in numerical output, rather than bool.
+    findboundaries = find_boundaries(x, mode = 'inner')
+    x = findboundaries * x
+
     return x
 
 def main():
