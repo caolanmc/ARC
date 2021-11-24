@@ -6,17 +6,26 @@ Student ID: 21249929
 Github: https://github.com/caolanmc/ARC
 
 Task 23b5c85d:
-
-Task 4290ef0e:
+    Simple enough task, x number of coloured quadrilaterals generated, the idea is to return just the smallest.
+    I flatten the x ndArray, to get a count of each colour (number), I now have the smallest int, I then go through the original x ndArray, removing anything that isn't our smallest int, and vStack() the remainder into a new temp array, this is then let = to x.
+    Task 4290ef0e:
 
 Task caa06a1f:
-
-Task 2dd709a:
+    Had a lot of trouble with this, ended up going about it wrong twice, undoing all my work. Currently in its not
+    fully working state it is able to find the original pattern, and replace the non patterened colours/numbers
+    with the pattern, in the correct array size. Now I need to transform this pattern. Demonstrations show
+    the patter swaps, but was having difficulty with this and moved on temporarily.
+    Task 2dd709a:
 
 Task 62c24649:
+    :(
+
+Task 62c24649:
+    Went about rotating all the ndArrays +90/-90/+180 degrees, took a second look at the ARC html only to note none of these are transformed count/clockwise, they're actually mirrored. So all of  that work was put in the bin, thankfully I read up on np.flip and
+    and was able to implement this mirroring pretty stress free. Our original X is basically the top left quarted of our image, we flip this horizontally to get the top left, flip these two vertically to get our bottom half, now we have the total reqested output.
 
 Summary:
-
+    Transcriber/describer -> construction 
 
 '''
 
@@ -27,6 +36,7 @@ import numpy as np
 import re
 
 from collections import Counter
+from numpy.core.fromnumeric import shape
 import sklearn as sk
 import matplotlib.pyplot as plt
 from math import dist
@@ -43,7 +53,7 @@ def solve_23b5c85d(x):
     count = Counter(xFlat)
 
     #leastCommon = min(count.values())
-    digit = [key for key, value in count.items() if value == min(count.values())] #get the value of our least frequent number.
+    digit = [i for i, value in count.items() if value == min(count.values())] #get the value of our least frequent number.
     digit = digit[0] #Extract our int
 
     temp = np.array([])
@@ -62,16 +72,12 @@ def solve_23b5c85d(x):
 #def solve_4290ef0e(x):
     #difficult?
     #return x
-
+'''
 def solve_caa06a1f(x):
-    #easy
-    xFlat = x.flatten()
-    count = Counter(xFlat)
-    countList = list(Counter(count).items())
-
-
+    #medium
     pattern = []
-
+    
+    #The below finds the pattern, for future use in remakingthe grid.
     for index, i in enumerate(x):
         if pattern:
             for j in i:
@@ -79,35 +85,52 @@ def solve_caa06a1f(x):
                     pass
                 else:
                     pattern.append(j)
-                    
         else:
-            #index 0
+            #index 0 (for getting first digit in pattern)
             pattern.append(i[0])
 
-    digit = pattern.pop()
+    digit = pattern.pop() #Labels our useless number, not in pattern.
 
-    temp = np.array([])
-
+    #Keep the shape ouf our original array, as np.tile will extend beyond what we want.
     shape = ((int(x.shape[0]), (int(x.shape[1]))))
     newGrid = np.tile(pattern,(shape))
 
+    #Trim the ndarray columns as they are multiplied by our pattern length.
+    #Spent a long time trying to fix this at the root cause, but no luck.
+    #We trim the num of columns equal to num of rows, as these are always equal.
     trim = shape[1]-newGrid.shape[1]
-    
     newGrid = newGrid[:,:trim]
     
-
     x = newGrid
 
     return x
+'''
 
-#def solve_2dd709a(x):
+'''
+def solve_2dd70a9a(x):
     #Medium?
     return x
+'''
+'''
+def solve_62c24649(x):
+    #Easy
 
-#def solve_62c24649(x):
-    #Easy/Medium?
+    #Break all sections of our "mirror", numpy does all the heavy lifting with its flip* methods.
+    topLeft = x
+    topRight = np.fliplr(x)
+    top = np.array([])
+    bottom = np.array([])
+
+    #Flip (Horizontal) our "top left" (original x) to get our mirror on the right, append this.
+    #Flip (Vertical) this entire appended topleft/topright to get our full mirror bottom half
+    top = np.append(topLeft,topRight,axis=1)
+    bottom = np.flip(top)
+
+    #Append these halves to get our entire mirrored array.
+    x = np.append(top,bottom,axis=0)    
+
     return x
-
+'''
 
 def main():
     # Find all the functions defined in this file whose names are
@@ -155,7 +178,7 @@ def read_ARC_JSON(filepath):
 def test(taskID, solve, data):
     """Given a task ID, call the given solve() function on every
     example in the task data."""
-    #print(taskID)
+    print(taskID)
     train_input, train_output, test_input, test_output = data
     print("Training grids")
     for x, y in zip(train_input, train_output):
